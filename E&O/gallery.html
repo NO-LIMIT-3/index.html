@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Artisan Roots Salon</title>
+    <style>
+        /* Reset and Base Styles (Same as Previous Pages) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #F8F5F2; /* Warm, sandy beige */
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: #4A4A4A; /* Dark charcoal */
+            margin-bottom: 0.75em;
+        }
+
+        h1 { font-size: 2.8rem; text-align: center; padding-top: 40px;}
+
+        p {
+            margin-bottom: 1em;
+            color: #555;
+        }
+
+        a {
+            text-decoration: none;
+            color: #8C6B5D; /* Muted terracotta */
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #6F564A; /* Darker terracotta */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Header & Navigation (Same as Previous Pages) */
+        .main-header {
+            background-color: #F8F5F2;
+            padding: 1.5em 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background-color: rgba(248, 245, 242, 0.95);
+            padding: 1em 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4A4A4A;
+            letter-spacing: 1px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .main-nav ul li {
+            margin-left: 25px;
+        }
+
+        .main-nav ul li a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4A4A4A;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .main-nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #8C6B5D;
+            transition: width 0.3s ease;
+        }
+
+        .main-nav ul li a:hover::after,
+        .main-nav ul li a.active::after {
+            width: 100%;
+        }
+        
+        .mobile-nav-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #4A4A4A;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Page Specific Styles: Gallery Page */
+        .page-header {
+            padding: 120px 0 60px; /* Adjust padding for fixed header */
+            text-align: center;
+            background-color: #EAE0D5; /* Lighter, warm beige */
+        }
+
+        .page-header h1 {
+            color: #4A4A4A;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        
+        .page-header .artistic-divider {
+            width: 80px;
+            height: 3px;
+            background-color: #8C6B5D; /* Terracotta */
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .gallery-section {
+            padding: 60px 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 20px;
+            align-items: start; /* For a more masonry-like feel if images have different heights */
+        }
+
+        .gallery-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            overflow: hidden; /* Ensures image corners are rounded if image is direct child */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover; /* Ensures image covers the area, might crop */
+            border-bottom: 3px solid #8C6B5D; /* Terracotta accent */
+        }
+        
+        .gallery-item-caption {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .gallery-item-caption h3 {
+            font-size: 1.1rem;
+            color: #3A5A40; /* Deep forest green */
+            margin-bottom: 5px;
+        }
+        
+        .gallery-item-caption p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        /* Lightbox Modal Styles */
+        .lightbox-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 2000; /* Above everything else */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if content is too long */
+            background-color: rgba(0,0,0,0.85); /* Dark overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            margin: auto;
+            padding: 0;
+            width: auto;
+            max-width: 85%;
+            max-height: 85vh;
+        }
+
+        .lightbox-content img {
+            width: auto;
+            max-width: 100%;
+            max-height: 80vh; /* Max height for the image itself */
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .lightbox-close:hover,
+        .lightbox-close:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+        
+        .gallery-cta {
+            text-align: center;
+            padding: 60px 0 20px;
+        }
+
+        .btn { /* Re-using button style */
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #8C6B5D;
+            color: #fff;
+            border: 2px solid #8C6B5D;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #6F564A;
+            border-color: #6F564A;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Footer (Same as Previous Pages) */
+        .main-footer {
+            background-color: #4A4A4A;
+            color: #EAE0D5;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .main-footer p {
+            margin-bottom: 10px;
+            color: #EAE0D5;
+        }
+
+        .social-links a {
+            color: #EAE0D5;
+            margin: 0 10px;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #8C6B5D;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-header .container { padding: 0 15px; }
+            .main-nav {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background-color: #F8F5F2; flex-direction: column;
+                align-items: center; max-height: 0; overflow: hidden;
+                transition: max-height 0.5s ease-out; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-nav.active { max-height: 300px; padding: 1em 0; }
+            .main-nav ul { flex-direction: column; width: 100%; text-align: center; }
+            .main-nav ul li { margin: 10px 0; width: 100%; }
+            .main-nav ul li a { display: block; padding: 10px; }
+            .main-nav ul li a::after { display: none; }
+            .main-nav ul li a:hover { background-color: #EAE0D5; }
+            .mobile-nav-toggle { display: block; }
+
+            h1 { font-size: 2.2rem; }
+            .page-header { padding: 100px 0 40px; }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            .lightbox-content { max-width: 90%; }
+        }
+
+        @media (max-width: 480px) {
+            .container { width: 95%; padding: 0 10px; }
+            .logo { font-size: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .gallery-grid {
+                grid-template-columns: 1fr; /* Single column on very small screens */
+                gap: 20px;
+            }
+            .gallery-item-caption h3 { font-size: 1rem; }
+            .gallery-item-caption p { font-size: 0.8rem; }
+            .lightbox-close { font-size: 30px; top: 10px; right: 20px;}
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header" id="mainHeader">
+        <div class="container">
+            <div class="logo">Artisan Roots</div>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                &#9776; <!-- Hamburger Icon -->
+            </button>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="stylist.html">Stylist</a></li> <!-- Placeholder -->
+                    <li><a href="contact.html">Contact</a></li>   <!-- Placeholder -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1> Artistic Showcase</h1>
+            <div class="artistic-divider"></div>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-grid">
+                <!-- Replace these with your actual images and captions -->
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x820/A0D0A0/FFFFFF?text=Creative+Highlights" data-alt="Creative Highlights">
+                    <img src="images\Geogeous hair.jfif" alt="Geogeous hair">
+                    <div class="gallery-item-caption">
+                        <h3>Creative Highlights</h3>
+                        <p>Geogeous flair.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x780/80A0C0/FFFFFF?text=Bridal+Styling" data-alt="Bridal Hair Styling">
+                    <img src="images\Braidal styling.jfif" alt="Bridal Hair Styling">
+                    <div class="gallery-item-caption">
+                        <h3>Bridal Styling</h3>
+                        <p>Unforgettable wedding hair.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x700/B0A090/FFFFFF?text=Natural+Balayage" data-alt="Natural Balayage Color">
+                    <img src="images\Knots.jfif" alt="Natural beauty">
+                    <div class="gallery-item-caption">
+                        <h3>Simply beautiful</h3>
+                        <p>Beauty in simplicity.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x850/A090B0/FFFFFF?text=Vivid+Color+Melt" data-alt="Vivid Color Melt">
+                    <img src="images\crochet twist.png" alt="crochet twist">
+                    <div class="gallery-item-caption">
+                        <h3>Timeless crochet</h3>
+                        <p>Bold and artistic expression.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x650/C0C0A0/FFFFFF?text=Textured+Layers" data-alt="Textured Layers Cut">
+                    <img src="images\Precision weave .jfif" alt="twist">
+                    <div class="gallery-item-caption">
+                        <h3>twist</h3>
+                        <p>Movement and volume.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x820/A0D0A0/FFFFFF?text=Creative+Highlights" data-alt="Creative Highlights">
+                    <img src="images\double.jfif" alt="Geogeous hair">
+                    <div class="gallery-item-caption">
+                        <h3>Efforless and sleek</h3>
+                        <p>Playful.</p>
+                    </div>
+                </div>
+                 <div class="gallery-item" data-src="https://via.placeholder.com/600x720/D0A0A0/FFFFFF?text=Men's+Cut" data-alt="Modern Men's Cut">
+                    <img src="images\Spring weave.jfif" alt="spring weave">
+                    <div class="gallery-item-caption">
+                        <h3>Modern Sharpness</h3>
+                        <p>Sharp and stylish.</p>
+                    </div>
+                </div>
+                 <div class="gallery-item" data-src="https://via.placeholder.com/600x820/A0D0A0/FFFFFF?text=Creative+Highlights" data-alt="Creative Highlights">
+                    <img src="images\New bby.jfif" alt="knottle twist">
+                    <div class="gallery-item-caption">
+                        <h3>Highlights and love</h3>
+                        <p>Bring your flair.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x820/A0D0A0/FFFFFF?text=Creative+Highlights" data-alt="Creative Highlights">
+                    <img src="images\Geogeous hair.jfif" alt="Geogeous hair">
+                    <div class="gallery-item-caption">
+                        <h3>Date special</h3>
+                        <p>Unforgettable.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x700/B0A090/FFFFFF?text=Natural+Balayage" data-alt="Natural Balayage Color">
+                    <img src="images\Another beauty.jfif" alt="Natural beauty">
+                    <div class="gallery-item-caption">
+                        <h3>Natural beauty</h3>
+                        <p>Sun-kissed, flowing color.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x820/A0D0A0/FFFFFF?text=Creative+Highlights" data-alt="Creative Highlights">
+                    <img src="images\knottle twist.jpg" alt="knottle twist">
+                    <div class="gallery-item-caption">
+                        <h3>Highlight your colour</h3>
+                        <p>Black power.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x820/A0D0A0/FFFFFF?text=Creative+Highlights" data-alt="Creative Highlights">
+                    <img src="images\Another beauty.jfif" alt="knottle twist">
+                    <div class="gallery-item-caption">
+                        <h3>First Impression</h3>
+                        <p>Show your dept.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x750/90B0A0/FFFFFF?text=Precision+Bob" data-alt="Precision Bob Cut">
+                    <img src="images\Eunice.jpeg" alt="Precision weave">
+                    <div class="gallery-item-caption">
+                        <h3>Marry me Specials</h3>
+                        <p>Special queen.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x800/A0A0A0/FFFFFF?text=Elegant+Updo" data-alt="Elegant Updo Hairstyle">
+                    <img src="images\tall chick.jfif" alt="Ghana weaving">
+                    <div class="gallery-item-caption">
+                        <h3>Ghana weaving</h3>
+                        <p>Perfect for special occasions.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/600x750/90B0A0/FFFFFF?text=Precision+Bob" data-alt="Precision Bob Cut">
+                    <img src="images\Eunice.jpeg" alt="Precision weave">
+                    <div class="gallery-item-caption">
+                        <h3>Elegant Black</h3>
+                        <p>Chic and timeless.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-cta">
+                 <a href="#booking" class="btn">Inspired? Book Your Appointment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal Structure -->
+    <div id="imageLightbox" class="lightbox-modal">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightboxImage" src="" alt="Enlarged Gallery Image">
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Artisan Roots Salon. All Rights Reserved.</p>
+            <p>Bakare estate off addo road, ajah</p>
+            <div class="social-links">
+                <a href="http://facebook.com/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="http://instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="http://pinterest.com/" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle (Same as Previous Pages)
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mainNav = document.getElementById('mainNav');
+        mobileNavToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const isExpanded = mainNav.classList.contains('active');
+            mobileNavToggle.setAttribute('aria-expanded', isExpanded);
+            mobileNavToggle.innerHTML = isExpanded ? '&times;' : '&#9776;';
+        });
+        
+        // Sticky header on scroll (Same as Previous Pages)
+        const header = document.getElementById('mainHeader');
+        const scrollThreshold = 50;
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Update active nav link (Simplified for this page)
+        const currentPathGallery = window.location.pathname.split("/").pop();
+        const navLinksGallery = document.querySelectorAll('.main-nav ul li a');
+        navLinksGallery.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === currentPathGallery || (currentPathGallery === '' && link.getAttribute('href') === 'index.html')) {
+                link.classList.add('active');
+            }
+            if (currentPathGallery === 'gallery.html' && link.getAttribute('href') === 'gallery.html') {
+                 link.classList.add('active');
+            }
+        });
+         if (window.location.href.includes('gallery.html')) {
+            document.querySelector('.main-nav ul li a[href="gallery.html"]').classList.add('active');
+        }
+
+        // Lightbox Functionality
+        const lightbox = document.getElementById('imageLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const closeBtn = document.querySelector('.lightbox-close');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.dataset.src || item.querySelector('img').src;
+                const imgAlt = item.dataset.alt || item.querySelector('img').alt;
+                lightboxImage.src = imgSrc;
+                lightboxImage.alt = imgAlt;
+                lightbox.style.display = 'flex'; // Use flex to center content
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore background scroll
+        });
+
+        // Close lightbox when clicking outside the image content (but not on the image itself)
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) { // Check if the click is on the modal backdrop
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Smooth scroll for CTA button
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === "#booking") { // Example for a booking section/page
+                    alert("This would lead to the booking page/system!"); 
+                }
+                 // Close mobile nav if open
+                if (mainNav.classList.contains('active') && targetId !== '#') {
+                    mainNav.classList.remove('active');
+                    mobileNavToggle.setAttribute('aria-expanded', 'false');
+                    mobileNavToggle.innerHTML = '&#9776;';
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Artisan Roots Salon</title>
+    <style>
+        /* Reset and Base Styles (Same as Homepage) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #F8F5F2; /* Warm, sandy beige */
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: #4A4A4A; /* Dark charcoal */
+            margin-bottom: 0.75em;
+        }
+
+        h1 { font-size: 2.8rem; margin-top: 80px; /* For fixed header */ text-align: center; padding-top: 40px;}
+        h2 { font-size: 2.2rem; color: #3A5A40; /* Deep forest green for category titles */ }
+        h3 { font-size: 1.5rem; color: #8C6B5D; /* Muted terracotta for service names */ }
+        h4 { font-size: 1.2rem; }
+
+
+        p {
+            margin-bottom: 1em;
+            color: #555;
+        }
+
+        a {
+            text-decoration: none;
+            color: #8C6B5D;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #6F564A;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Header & Navigation (Same as Homepage) */
+        .main-header {
+            background-color: #F8F5F2;
+            padding: 1.5em 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background-color: rgba(248, 245, 242, 0.95);
+            padding: 1em 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4A4A4A;
+            letter-spacing: 1px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .main-nav ul li {
+            margin-left: 25px;
+        }
+
+        .main-nav ul li a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4A4A4A;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .main-nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #8C6B5D;
+            transition: width 0.3s ease;
+        }
+
+        .main-nav ul li a:hover::after,
+        .main-nav ul li a.active::after {
+            width: 100%;
+        }
+        
+        .mobile-nav-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #4A4A4A;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Page Specific Styles: Services Page */
+        .page-header {
+            padding: 120px 0 60px; /* Adjust padding for fixed header */
+            text-align: center;
+            background-color: #EAE0D5; /* Lighter, warm beige for a soft header bg */
+        }
+
+        .page-header h1 {
+            color: #4A4A4A;
+            margin-top: 0; /* Reset margin-top for this h1 */
+            padding-top: 0;
+        }
+        
+        .page-header .artistic-divider {
+            width: 80px;
+            height: 3px;
+            background-color: #8C6B5D; /* Terracotta */
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .services-section {
+            padding: 60px 0;
+        }
+
+        .service-category {
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: #fff; /* White cards for categories */
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+        }
+        
+        .service-category h2 {
+            text-align: left;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #EAE0D5; /* Light beige border */
+            position: relative;
+        }
+        
+        .service-category h2::before { /* Artistic touch for category titles */
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px; /* Align with the border */
+            width: 60px;
+            height: 2px;
+            background-color: #3A5A40; /* Deep forest green */
+        }
+
+        .service-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* Align items to the top */
+            padding: 20px 0;
+            border-bottom: 1px dashed #D3C5BC; /* Muted terracotta dashed line */
+        }
+
+        .service-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-details {
+            flex-grow: 1;
+            padding-right: 20px; /* Space between details and price */
+        }
+
+        .service-details h3 {
+            font-size: 1.3rem; /* Slightly smaller for service names */
+            margin-bottom: 5px;
+        }
+
+        .service-details p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .service-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #4A4A4A;
+            font-weight: bold;
+            white-space: nowrap; /* Prevent price from wrapping */
+        }
+        
+        .services-cta {
+            text-align: center;
+            padding: 40px 0 0;
+        }
+
+        .btn { /* Re-using button style from homepage */
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #8C6B5D; /* Terracotta */
+            color: #fff;
+            border: 2px solid #8C6B5D;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #6F564A; /* Darker terracotta */
+            border-color: #6F564A;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+
+        /* Footer (Same as Homepage) */
+        .main-footer {
+            background-color: #4A4A4A;
+            color: #EAE0D5;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .main-footer p {
+            margin-bottom: 10px;
+            color: #EAE0D5;
+        }
+
+        .social-links a {
+            color: #EAE0D5;
+            margin: 0 10px;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #8C6B5D;
+        }
+        
+        /* Responsive Design (Adjustments for Services Page) */
+        @media (max-width: 768px) {
+            .main-header .container {
+                padding: 0 15px;
+            }
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #F8F5F2;
+                flex-direction: column;
+                align-items: center;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .main-nav.active {
+                max-height: 300px;
+                padding: 1em 0;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav ul li {
+                margin: 10px 0;
+                width: 100%;
+            }
+             .main-nav ul li a {
+                display: block;
+                padding: 10px;
+            }
+            .main-nav ul li a::after {
+                display: none;
+            }
+            .main-nav ul li a:hover {
+                background-color: #EAE0D5;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            
+            .page-header { padding: 100px 0 40px; }
+
+            .service-list-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .service-details {
+                padding-right: 0;
+                margin-bottom: 10px; /* Space between details and price on mobile */
+            }
+            .service-price {
+                font-size: 1.2rem;
+                align-self: flex-start; /* Align price to the left on mobile */
+            }
+            .service-category {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container { width: 95%; padding: 0 10px; }
+            .logo { font-size: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .service-details h3 { font-size: 1.1rem; }
+            .service-details p { font-size: 0.9rem; }
+            .service-price { font-size: 1.1rem; }
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header" id="mainHeader">
+        <div class="container">
+            <div class="logo">Artisan Roots</div>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                &#9776; <!-- Hamburger Icon -->
+            </button>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="index.html">Home</a></li> <!-- Assuming homepage is index.html -->
+                    <li><a href="services.html" class="active">Services</a></li>
+                    <li><a href="gallery.html">Gallery</a></li> <!-- Placeholder links for now -->
+                    <li><a href="stylist.html">Stylist</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Artful Services</h1>
+            <div class="artistic-divider"></div>
+        </div>
+    </section>
+
+    <section class="services-section">
+        <div class="container">
+            
+            <div class="service-category">
+                <h2>Hair Artistry & Styling</h2>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Artistic Precision Cut & Style</h3>
+                        <p>A tailored cut designed to complement your features and personal style, finished with a professional blowout.</p>
+                    </div>
+                    <div class="service-price">from $75</div>
+                </div>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Signature Blowout</h3>
+                        <p>Achieve voluminous, sleek, or wavy locks with our expert blowout service.</p>
+                    </div>
+                    <div class="service-price">from $50</div>
+                </div>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Updo & Event Styling</h3>
+                        <p>Elegant updos, braids, and sophisticated styles for your special occasions.</p>
+                    </div>
+                    <div class="service-price">from $90</div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h2>Natural Colour & Highlights</h2>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Natural Balayage / Ombre</h3>
+                        <p>Hand-painted colour for a soft, natural-looking gradation of lightness towards the ends.</p>
+                    </div>
+                    <div class="service-price">from $180</div>
+                </div>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Full Head Colour</h3>
+                        <p>All-over colour application for a rich, uniform shade or a bold new look.</p>
+                    </div>
+                    <div class="service-price">from $120</div>
+                </div>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Root Touch-Up</h3>
+                        <p>Seamlessly blend regrowth with your existing colour.</p>
+                    </div>
+                    <div class="service-price">from $80</div>
+                </div>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Creative Colour Correction</h3>
+                        <p>Expert solutions to correct unwanted tones or previous colour applications. (Consultation required)</p>
+                    </div>
+                    <div class="service-price">By Consultation</div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h2>Botanical Treatments & Care</h2>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Botanical Hair & Scalp Spa</h3>
+                        <p>A deeply nourishing and revitalizing treatment using plant-based elixirs to restore health and shine.</p>
+                    </div>
+                    <div class="service-price">$65</div>
+                </div>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Intensive Repair Mask</h3>
+                        <p>Strengthen and repair damaged hair with a potent infusion of natural proteins and oils.</p>
+                    </div>
+                    <div class="service-price">$45 (add-on)</div>
+                </div>
+                <div class="service-list-item">
+                    <div class="service-details">
+                        <h3>Glossing Treatment</h3>
+                        <p>Enhance your hair's natural shine and vibrancy with a clear or tinted gloss.</p>
+                    </div>
+                    <div class="service-price">from $60</div>
+                </div>
+            </div>
+            
+            <div class="services-cta">
+                 <a href="#booking" class="btn">Book Your Service</a> <!-- This would link to a booking page -->
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Artisan Roots Salon. All Rights Reserved.</p>
+            <p>Bakare estate off addo road, ajah</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="http://instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Pinterest">PT</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links (if any on this page, e.g. the "Book Your Service" button)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                // If we had a booking section on this page:
+                // const targetElement = document.querySelector(targetId);
+                // if (targetElement) {
+                //     window.scrollTo({
+                //         top: targetElement.offsetTop - 70, 
+                //         behavior: 'smooth'
+                //     });
+                // }
+                // For now, this button would ideally go to a separate booking page/app
+                if (targetId === "#booking") {
+                    alert("This would lead to the booking page/system!"); 
+                }
+                 // Close mobile nav if open
+                if (mainNav.classList.contains('active') && targetId !== '#') {
+                    mainNav.classList.remove('active');
+                    mobileNavToggle.setAttribute('aria-expanded', 'false');
+                    mobileNavToggle.innerHTML = '&#9776;';
+                }
+            });
+        });
+
+        // Mobile navigation toggle (Same as Homepage)
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileNavToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const isExpanded = mainNav.classList.contains('active');
+            mobileNavToggle.setAttribute('aria-expanded', isExpanded);
+            mobileNavToggle.innerHTML = isExpanded ? '&times;' : '&#9776;';
+        });
+        
+        // Sticky header on scroll (Same as Homepage)
+        const header = document.getElementById('mainHeader');
+        const scrollThreshold = 50;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Update active nav link (Simplified for this page as it doesn't have scroll sections)
+        // This assumes your homepage is 'index.html' and services page is 'services.html'
+        // You'd need to adjust hrefs in the nav if your file names are different.
+        const currentPath = window.location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll('.main-nav ul li a');
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === currentPath || (currentPath === '' && link.getAttribute('href') === 'index.html')) {
+                link.classList.add('active');
+            }
+            // Specifically for services page
+            if (currentPath === 'services.html' && link.getAttribute('href') === 'services.html') {
+                 link.classList.add('active');
+            }
+        });
+        // If on services.html, ensure the "Services" link is active
+        if (window.location.href.includes('services.html')) {
+            document.querySelector('.main-nav ul li a[href="services.html"]').classList.add('active');
+        }
+
+
+    </script>
+
+</body>
+</html>

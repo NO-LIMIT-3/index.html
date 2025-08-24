@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Roots Salon - Home</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #F8F5F2; /* Warm, sandy beige */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; /* A more artistic, bold serif */
+            color: #4A4A4A; /* Dark charcoal */
+            margin-bottom: 0.75em;
+        }
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.5rem; }
+
+        p {
+            margin-bottom: 1em;
+            color: #555; /* Softer grey for text */
+        }
+
+        a {
+            text-decoration: none;
+            color: #8C6B5D; /* Muted terracotta for links */
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #6F564A; /* Darker terracotta on hover */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Header & Navigation */
+        .main-header {
+            background-color: #F8F5F2; /* Sandy beige */
+            padding: 1.5em 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background-color: rgba(248, 245, 242, 0.95); /* Slightly transparent on scroll */
+            padding: 1em 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4A4A4A;
+            letter-spacing: 1px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .main-nav ul li {
+            margin-left: 25px;
+        }
+
+        .main-nav ul li a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4A4A4A;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .main-nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #8C6B5D; /* Terracotta */
+            transition: width 0.3s ease;
+        }
+
+        .main-nav ul li a:hover::after,
+        .main-nav ul li a.active::after {
+            width: 100%;
+        }
+        
+        .mobile-nav-toggle {
+            display: none; /* Hidden by default, shown on small screens */
+            font-size: 1.8rem;
+            color: #4A4A4A;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+            text-align: center; /* Center text within the content block */
+            background: url('https://via.placeholder.com/1920x1080/D3C5BC/4A4A4A?text=Artistic+Salon+Vibes') no-repeat center center/cover; /* Placeholder - replace with actual image */
+            color: #fff;
+            position: relative;
+            padding-top: 80px; /* Account for fixed header */
+        }
+
+        .hero::before { /* Overlay for better text readability */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(74, 74, 74, 0.4); /* Dark charcoal overlay, slightly transparent */
+        }
+
+        .hero-content {
+            position: relative; /* To be above the overlay */
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #f0f0f0;
+            margin-bottom: 1.5em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #8C6B5D; /* Terracotta */
+            color: #fff;
+            border: 2px solid #8C6B5D;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #6F564A; /* Darker terracotta */
+            border-color: #6F564A;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #8C6B5D; /* Terracotta */
+            border: 2px solid #8C6B5D;
+        }
+
+        .btn-outline:hover {
+            background-color: #8C6B5D;
+            color: #fff;
+        }
+
+        /* Intro Section */
+        .intro-section, .featured-services, .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .intro-section .container, .featured-services .container, .cta-section .container {
+            max-width: 800px;
+        }
+        
+        .intro-section h2 {
+            color: #3A5A40; /* Deep forest green */
+        }
+
+        .intro-section .artistic-divider {
+            width: 80px;
+            height: 3px;
+            background-color: #3A5A40; /* Deep forest green */
+            margin: 15px auto 30px;
+            border-radius: 2px;
+        }
+
+        /* Featured Services Section */
+        .featured-services {
+            background-color: #EAE0D5; /* Lighter, warm beige */
+        }
+        
+        .featured-services h2 {
+            color: #4A4A4A; /* Dark charcoal */
+        }
+
+        .service-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-item {
+            flex-basis: calc(33.333% - 20px); /* Adjust for gap */
+            min-width: 280px; /* Ensure items don't get too small */
+            background-color: #F8F5F2; /* Sandy beige */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+
+        .service-item-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background-color: #8C6B5D; /* Terracotta */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.8rem; /* Placeholder for icon */
+        }
+        /* Example: using a simple SVG as a placeholder icon */
+        .service-item-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: #fff;
+        }
+
+        .service-item h3 {
+            color: #8C6B5D; /* Terracotta */
+            margin-bottom: 10px;
+        }
+
+        .service-item p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background-color: #3A5A40; /* Deep forest green */
+            color: #fff;
+        }
+
+        .cta-section h2 {
+            color: #fff;
+        }
+        .cta-section p {
+            color: #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #4A4A4A; /* Dark charcoal */
+            color: #EAE0D5; /* Lighter, warm beige for text */
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .main-footer p {
+            margin-bottom: 10px;
+            color: #EAE0D5;
+        }
+
+        .social-links a {
+            color: #EAE0D5;
+            margin: 0 10px;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #8C6B5D; /* Terracotta */
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.1rem; }
+            .service-item { flex-basis: calc(50% - 15px); }
+        }
+
+        @media (max-width: 768px) {
+            .main-header .container {
+                padding: 0 15px; /* Adjust padding for smaller screens */
+            }
+            .main-nav {
+                position: absolute;
+                top: 100%; /* Position below header */
+                left: 0;
+                width: 100%;
+                background-color: #F8F5F2; /* Sandy beige */
+                flex-direction: column;
+                align-items: center;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .main-nav.active {
+                max-height: 300px; /* Adjust as needed */
+                padding: 1em 0;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav ul li {
+                margin: 10px 0;
+                width: 100%;
+            }
+            .main-nav ul li a {
+                display: block;
+                padding: 10px;
+            }
+            .main-nav ul li a::after {
+                display: none; /* Hide underline effect on mobile nav items */
+            }
+            .main-nav ul li a:hover {
+                background-color: #EAE0D5; /* Lighter beige for hover */
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+
+            .hero { min-height: 500px; padding-top: 70px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+
+            .service-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .service-item {
+                flex-basis: 100%;
+                width: 90%;
+                max-width: 350px;
+            }
+            .intro-section, .featured-services, .cta-section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container { width: 95%; padding: 0 10px; }
+            .logo { font-size: 1.5rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.9rem; }
+            .btn { padding: 10px 20px; font-size: 0.9rem;}
+            .service-item { padding: 20px; }
+        }
+
+    </style>
+    <!-- Google Fonts - Playfair Display for artistic headings, and a common sans-serif will be default -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header" id="mainHeader">
+        <div class="container">
+            <div class="logo">Artisan Roots</div>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                &#9776; <!-- Hamburger Icon -->
+            </button>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="stylist.html">Stylist</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Where Nature Meets Artistry</h1>
+            <p>Experience hair care that's as unique and authentic as you are. Discover your roots, redefine your style.</p>
+            <a href="#booking" class="btn">Book Your Transformation</a>
+        </div>
+    </section>
+
+    <section class="intro-section">
+        <div class="container">
+            <h2>Crafted with Passion, Inspired by Nature</h2>
+            <div class="artistic-divider"></div>
+            <p>At Artisan Roots, we believe in the beauty of individuality. Our salon is a haven where modern techniques blend seamlessly with natural inspiration. We're dedicated to providing you with a personalized experience, using high-quality, mindfully chosen products to bring out your hair's inherent vitality and artistic expression.</p>
+        </div>
+    </section>
+
+    <section class="featured-services">
+        <div class="container">
+            <h2>Signature Experiences</h2>
+            <div class="service-grid">
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <!-- Placeholder for an artistic icon, e.g., a leaf or abstract shape -->
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path></svg> <!-- Example generic icon -->
+                    </div>
+                    <h3>Natural Balayage</h3>
+                    <p>Sun-kissed highlights that grow out gracefully, mimicking nature's own artistry.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <img src="images\Precision weave .jfif" alt="twist">
+                         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path></svg>
+                    </div>
+                    <h3>Botanical Hair Spa</h3>
+                    <p>Revitalize your hair and scalp with our nourishing, plant-based treatments.</p>
+                </div>
+                <div class="service-item">
+                    <img src="images\Precision weave .jfif" alt="twist">
+                    <div class="service-item-icon">
+                         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path></svg>
+                    </div>
+                    <h3>Artistic Precision Cuts</h3>
+                    <p>Tailored haircuts designed to enhance your features and express your unique style.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="booking">
+        <div class="container">
+            <h2>Ready for a Change?</h2>
+            <p>Let our artist craft a look that's uniquely you. Secure your appointment today and step into a world of natural beauty and bold expression.</p>
+            <a href="#contact" class="btn btn-outline">Book Online Now</a> <!-- This would eventually link to a booking page -->
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Artisan Roots Salon. All Rights Reserved.</p>
+            <p>Bakare estate off addo road, ajah</p>
+            <div class="social-links">
+                <!-- Replace # with actual links. Consider using SVG icons for better scalability and artistic control -->
+                <a href="http://facebook.com/" aria-label="Facebook">Facebook</a>
+                <a href="http://instagram.com/" aria-label="Instagram">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70, // Adjust for fixed header height
+                        behavior: 'smooth'
+                    });
+                    // Close mobile nav if open
+                    if (mainNav.classList.contains('active') && targetId !== '#') {
+                        mainNav.classList.remove('active');
+                        mobileNavToggle.setAttribute('aria-expanded', 'false');
+                        mobileNavToggle.innerHTML = '&#9776;';
+                    }
+                }
+            });
+        });
+
+        // Mobile navigation toggle
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileNavToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const isExpanded = mainNav.classList.contains('active');
+            mobileNavToggle.setAttribute('aria-expanded', isExpanded);
+            mobileNavToggle.innerHTML = isExpanded ? '&times;' : '&#9776;'; // Times icon when open, hamburger when closed
+        });
+        
+        // Sticky header on scroll
+        const header = document.getElementById('mainHeader');
+        const scrollThreshold = 50; // Pixels to scroll before header becomes sticky
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Update active nav link on scroll (basic version)
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.main-nav ul li a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 80) { // 80 to account for header and a bit of offset
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current) && current !== '') {
+                    link.classList.add('active');
+                } else if (current === '' && link.getAttribute('href').includes('home')) {
+                    // Default to home if at the top
+                     link.classList.add('active');
+                }
+            });
+             // If no section is "current" (e.g., at the very top or bottom beyond sections), ensure Home is active if appropriate
+            if (current === '' && window.pageYOffset < sections[0].offsetTop - 80) {
+                 document.querySelector('.main-nav ul li a[href="#home"]').classList.add('active');
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

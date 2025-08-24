@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Stylists - Artisan Roots Salon</title>
+    <style>
+        /* Reset and Base Styles (Same as Previous Pages) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #F8F5F2; /* Warm, sandy beige */
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: #4A4A4A; /* Dark charcoal */
+            margin-bottom: 0.75em;
+        }
+
+        h1 { font-size: 2.8rem; text-align: center; padding-top: 40px;}
+        h2 { font-size: 2rem; color: #3A5A40; /* Deep forest green */ }
+        h3 { font-size: 1.4rem; color: #8C6B5D; /* Muted terracotta */ }
+
+
+        p {
+            margin-bottom: 1em;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: #8C6B5D;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #6F564A;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Header & Navigation (Same as Previous Pages) */
+        .main-header {
+            background-color: #F8F5F2;
+            padding: 1.5em 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background-color: rgba(248, 245, 242, 0.95);
+            padding: 1em 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4A4A4A;
+            letter-spacing: 1px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .main-nav ul li {
+            margin-left: 25px;
+        }
+
+        .main-nav ul li a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4A4A4A;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .main-nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #8C6B5D;
+            transition: width 0.3s ease;
+        }
+
+        .main-nav ul li a:hover::after,
+        .main-nav ul li a.active::after {
+            width: 100%;
+        }
+        
+        .mobile-nav-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #4A4A4A;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Page Specific Styles: Stylists Page */
+        .page-header {
+            padding: 120px 0 60px; /* Adjust padding for fixed header */
+            text-align: center;
+            background-color: #EAE0D5; /* Lighter, warm beige */
+        }
+
+        .page-header h1 {
+            color: #4A4A4A;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        
+        .page-header .artistic-divider {
+            width: 80px;
+            height: 3px;
+            background-color: #8C6B5D; /* Terracotta */
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        .page-header p.intro-text {
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.05rem;
+            color: #555;
+        }
+
+        .stylists-section {
+            padding: 60px 0;
+        }
+
+        .stylist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .stylist-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            text-align: center;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stylist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .stylist-image-wrapper {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 5px solid #EAE0D5; /* Light beige border */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .stylist-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stylist-card h2 { /* Stylist Name */
+            font-size: 1.8rem;
+            color: #3A5A40; /* Deep forest green */
+            margin-bottom: 8px;
+        }
+
+        .stylist-card h3 { /* Stylist Title/Specialty */
+            font-size: 1.1rem;
+            color: #8C6B5D; /* Muted terracotta */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More legible for subtitle */
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stylist-card p { /* Stylist Bio */
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        .stylist-social-links {
+            margin-top: 20px;
+        }
+        
+        .stylist-social-links a {
+            color: #4A4A4A;
+            margin: 0 8px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .stylist-social-links a:hover {
+            color: #8C6B5D; /* Terracotta */
+        }
+        
+        .team-cta {
+            text-align: center;
+            padding: 60px 0 20px;
+        }
+
+        .btn { /* Re-using button style */
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #8C6B5D;
+            color: #fff;
+            border: 2px solid #8C6B5D;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #6F564A;
+            border-color: #6F564A;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+
+        /* Footer (Same as Previous Pages) */
+        .main-footer {
+            background-color: #4A4A4A;
+            color: #EAE0D5;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .main-footer p {
+            margin-bottom: 10px;
+            color: #EAE0D5;
+        }
+
+        .social-links a {
+            color: #EAE0D5;
+            margin: 0 10px;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #8C6B5D;
+        }
+        
+        /* Responsive Design */
+         @media (max-width: 992px) {
+            .stylist-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
+            .stylist-image-wrapper {
+                width: 160px;
+                height: 160px;
+            }
+            .stylist-card h2 { font-size: 1.6rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .main-header .container { padding: 0 15px; }
+            .main-nav {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background-color: #F8F5F2; flex-direction: column;
+                align-items: center; max-height: 0; overflow: hidden;
+                transition: max-height 0.5s ease-out; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-nav.active { max-height: 300px; padding: 1em 0; }
+            .main-nav ul { flex-direction: column; width: 100%; text-align: center; }
+            .main-nav ul li { margin: 10px 0; width: 100%; }
+            .main-nav ul li a { display: block; padding: 10px; }
+            .main-nav ul li a::after { display: none; }
+            .main-nav ul li a:hover { background-color: #EAE0D5; }
+            .mobile-nav-toggle { display: block; }
+
+            h1 { font-size: 2.2rem; }
+            .page-header { padding: 100px 0 40px; }
+            .page-header p.intro-text { font-size: 1rem; }
+            
+            .stylist-grid {
+                grid-template-columns: 1fr; /* Single column for smaller tablets / large phones */
+                gap: 30px;
+            }
+             .stylist-card { padding: 25px; }
+             .stylist-image-wrapper {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container { width: 95%; padding: 0 10px; }
+            .logo { font-size: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .stylist-card h2 { font-size: 1.4rem; }
+            .stylist-card h3 { font-size: 1rem; }
+            .stylist-card p { font-size: 0.85rem; }
+            .stylist-image-wrapper {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social icons - replace with SVGs or other icon set if preferred -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header" id="mainHeader">
+        <div class="container">
+            <div class="logo">Artisan Roots</div>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                &#9776; <!-- Hamburger Icon -->
+            </button>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="stylist.html" class="active">Stylist</a></li>
+                    <li><a href="contact.html">Contact</a></li> <!-- Placeholder -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Meet The Artisan</h1>
+            <div class="artistic-divider"></div>
+            <p class="intro-text">Your beauty is the heart of Artisan Roots. Aimed at bringing to you a unique blend of skill, passion, and creativity, dedicated to crafting looks that are as individual as you are.</p>
+        </div>
+    </section>
+
+    <section class="stylists-section">
+        <div class="container">
+            <div class="stylist-grid">
+               
+                <!-- Stylist 3 -->
+                <div class="stylist-card">
+                    <div class="stylist-image-wrapper">
+                        <img src="images\Eunice.jpeg" alt="Portrait of Eunice Onyenoha">
+                    </div>
+                    <h2>Eunice Onyenoha</h2>
+                    <h3>Creative Stylist & Bridal Specialist</h3>
+                    <p>Eunice's passion lies in transformative styling and making special occasions unforgettable. She excels in creative updos, bridal hair, and treatments that bring out hair's natural radiance and vitality.</p>
+                     <div class="stylist-social-links">
+                        <a href="http://instagram.com/" aria-label="Eunice 's Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="http://facebook.com/" aria-label="Eunice 's Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Add more stylists as needed -->
+
+            </div>
+            <div class="team-cta">
+                 <a href="#booking" class="btn">Book with Your Preferred Stylist</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Artisan Roots Salon. All Rights Reserved.</p>
+            <p>Bakare estate off addo road, ajah</p>
+            <div class="social-links">
+                <a href="http://facebook.com/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="http://instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="http://pinterest.com/" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle (Same as Previous Pages)
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mainNav = document.getElementById('mainNav');
+        mobileNavToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const isExpanded = mainNav.classList.contains('active');
+            mobileNavToggle.setAttribute('aria-expanded', isExpanded);
+            mobileNavToggle.innerHTML = isExpanded ? '&times;' : '&#9776;';
+        });
+        
+        // Sticky header on scroll (Same as Previous Pages)
+        const header = document.getElementById('mainHeader');
+        const scrollThreshold = 50;
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Update active nav link
+        const currentPathStylists = window.location.pathname.split("/").pop();
+        const navLinksStylists = document.querySelectorAll('.main-nav ul li a');
+        navLinksStylists.forEach(link => {
+            link.classList.remove('active');
+            const linkPath = link.getAttribute('href').split("/").pop();
+            if (linkPath === currentPathStylists || (currentPathStylists === '' && linkPath === 'index.html')) {
+                link.classList.add('active');
+            }
+        });
+         if (window.location.href.includes('stylists.html')) { // Ensure correct active link
+            document.querySelectorAll('.main-nav ul li a').forEach(l => l.classList.remove('active'));
+            document.querySelector('.main-nav ul li a[href="stylists.html"]').classList.add('active');
+        }
+        
+        // Smooth scroll for CTA button
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === "#booking") { 
+                    alert("This would lead to the booking page/system, potentially allowing stylist selection!"); 
+                }
+                 // Close mobile nav if open
+                if (mainNav.classList.contains('active') && targetId !== '#') {
+                    mainNav.classList.remove('active');
+                    mobileNavToggle.setAttribute('aria-expanded', 'false');
+                    mobileNavToggle.innerHTML = '&#9776;';
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>
